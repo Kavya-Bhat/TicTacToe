@@ -1,10 +1,7 @@
 package com.example;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.lang.ClassNotFoundException;
 
 public class Main
@@ -28,69 +25,217 @@ public class Main
         g.setPlayer1(p2);
 
         clrscr();
+        int p1Wins = 0;
+        int p2Wins = 0;
+        int flag = 0;
 
-        int result = 0;
-        for(int i = 1; result == 0; i++)
+        for(int x = 1;flag == 0;x++)
         {
-            if(i % 2 == 1)
+            clrscr();
+            p1Positions.clear();
+            p2Positions.clear();
+
+            System.out.println("Welcome to round " + x);
+            System.out.println();
+            g.setGameBoard();
+            if(x % 2 == 1)
             {
-                System.out.println("It is " + p1 + "'s turn. " + p1 + ", please enter a number between 1 to 9 to position your symbol.");
-                g.printBoard();
-                int p1Pos = scanner.nextInt();
-                while(p1Positions.contains(p1Pos) || p2Positions.contains(p1Pos) || p1Pos < 0 || p1Pos > 9)
+                int result = 0;
+                for (int i = 1; result == 0; i++)
                 {
-                    if(p1Pos < 0 || p1Pos > 9)
+                    System.out.println(p1 + " - X");
+                    System.out.println(p2 + " - O");
+                    System.out.println();
+                    System.out.println();
+
+                    if (i % 2 == 1)
                     {
-                        System.out.println("Invalid number. Please enter a new number between 1 and 9");
-                        p1Pos = scanner.nextInt();
+                        System.out.println("It is " + p1 + "'s turn. " + p1 + ", please enter a number between 1 to 9 to position your symbol.");
+                        System.out.println();
+                        g.printBoard();
+                        int p1Pos = scanner.nextInt();
+                        while (p1Positions.contains(p1Pos) || p2Positions.contains(p1Pos) || p1Pos < 0 || p1Pos > 9)
+                        {
+                            if (p1Pos < 0 || p1Pos > 9)
+                            {
+                                System.out.println("Invalid number. Please enter a new number between 1 and 9");
+                                p1Pos = scanner.nextInt();
+                            } else
+                            {
+                                System.out.println("Position already taken. Enter a number such that the position which you enter is empty.");
+                                p1Pos = scanner.nextInt();
+                            }
+                        }
+                        p1Positions.add(p1Pos);
+                        g.placePiece(p1Pos, 'X');
                     }
                     else
                     {
-                        System.out.println("Position already taken. Enter a number such that the position which you enter is empty.");
-                        p1Pos = scanner.nextInt();
+                        System.out.println("It is " + p2 + "'s turn. " + p2 + ", please enter a number between 1 to 9 to position your symbol.");
+                        System.out.println();
+                        g.printBoard();
+                        int p2Pos = scanner.nextInt();
+                        while (p1Positions.contains(p2Pos) || p2Positions.contains(p2Pos) || p2Pos < 0 || p2Pos > 9)
+                        {
+                            if (p2Pos < 0 || p2Pos > 9)
+                            {
+                                System.out.println("Invalid number. Please enter a new number between 1 and 9");
+                                p2Pos = scanner.nextInt();
+                            } else
+                            {
+                                System.out.println("Position already taken. Enter a number such that the position which you enter is empty.");
+                                p2Pos = scanner.nextInt();
+                            }
+                        }
+                        p2Positions.add(p2Pos);
+                        g.placePiece(p2Pos, 'O');
                     }
+
+                    clrscr();
+                    result = g.checkWinner(p1Positions, p2Positions);
                 }
-                p1Positions.add(p1Pos);
-                g.placePiece(p1Pos, 'X');
+
+                if(result == 10)
+                {
+                    System.out.println("Congrats " + p1 + ". You win!");
+                    p1Wins++;
+                }
+                else if(result == 20)
+                {
+                    System.out.println("Congrats " + p2 + ". You win!");
+                    p2Wins++;
+                }
+                else
+                {
+                    System.out.println("It's a tie between " + p1 + " and " + p2);
+                }
+                System.out.println();
+                System.out.println("If you want to proceed to the next round, press 0. Else if you wanna start a new game, press 1. If you want to end the game, press 2");
+                System.out.println("DO NOT Enter any other number other than 0 or 1 or 2. If you do so, the game will end");
+                flag = scanner.nextInt();
+
+                if(flag == 0)
+                {
+                    continue;
+                }
+                else if(flag == 2)
+                {
+                    System.out.println("The Final score:");
+                    System.out.println(p1 + " - " + p1Wins + "\n" + p2 + " - " + p2Wins);
+                    System.out.println();
+                    System.out.println("Thank you for playing this game! :)");
+                    System.exit(0);
+                }
+                //else if(flag == 1)
+                else
+                {
+                    System.out.println("Invalid input. Please enter 0 or 1 or 2.");
+                    System.exit(0);
+                }
+
             }
             else
             {
-                System.out.println("It is " + p2 + "'s turn. " + p2 + ", please enter a number between 1 to 9 to position your symbol.");
-                g.printBoard();
-                int p2Pos = scanner.nextInt();
-                while(p1Positions.contains(p2Pos) || p2Positions.contains(p2Pos) || p2Pos < 0 || p2Pos > 9)
+                int result = 0;
+                for (int i = 1; result == 0; i++)
                 {
-                    if(p2Pos < 0 || p2Pos > 9)
+                    System.out.println(p1 + " - O");
+                    System.out.println(p2 + " - X");
+                    System.out.println();
+                    System.out.println();
+
+                    if (i % 2 == 0)
                     {
-                        System.out.println("Invalid number. Please enter a new number between 1 and 9");
-                        p2Pos = scanner.nextInt();
+                        System.out.println("It is " + p1 + "'s turn. " + p1 + ", please enter a number between 1 to 9 to position your symbol.");
+                        System.out.println();
+                        g.printBoard();
+                        int p1Pos = scanner.nextInt();
+                        while (p1Positions.contains(p1Pos) || p2Positions.contains(p1Pos) || p1Pos < 0 || p1Pos > 9)
+                        {
+                            if (p1Pos < 0 || p1Pos > 9)
+                            {
+                                System.out.println("Invalid number. Please enter a new number between 1 and 9");
+                                p1Pos = scanner.nextInt();
+                            } else
+                            {
+                                System.out.println("Position already taken. Enter a number such that the position which you enter is empty.");
+                                p1Pos = scanner.nextInt();
+                            }
+                        }
+                        p1Positions.add(p1Pos);
+                        g.placePiece(p1Pos, 'O');
                     }
                     else
                     {
-                        System.out.println("Position already taken. Enter a number such that the position which you enter is empty.");
-                        p2Pos = scanner.nextInt();
+                        System.out.println("It is " + p2 + "'s turn. " + p2 + ", please enter a number between 1 to 9 to position your symbol.");
+                        System.out.println();
+                        g.printBoard();
+                        int p2Pos = scanner.nextInt();
+                        while (p1Positions.contains(p2Pos) || p2Positions.contains(p2Pos) || p2Pos < 0 || p2Pos > 9)
+                        {
+                            if (p2Pos < 0 || p2Pos > 9)
+                            {
+                                System.out.println("Invalid number. Please enter a new number between 1 and 9");
+                                p2Pos = scanner.nextInt();
+                            } else
+                            {
+                                System.out.println("Position already taken. Enter a number such that the position which you enter is empty.");
+                                p2Pos = scanner.nextInt();
+                            }
+                        }
+                        p2Positions.add(p2Pos);
+                        g.placePiece(p2Pos, 'X');
                     }
+
+                    clrscr();
+                    result = g.checkWinner(p1Positions, p2Positions);
                 }
-                p2Positions.add(p2Pos);
-                g.placePiece(p2Pos, 'O');
+
+                if(result == 10)
+                {
+                    g.printBoard();
+                    System.out.println("Congrats " + p1 + ". You win!");
+                    p1Wins++;
+                }
+                else if(result == 20)
+                {
+                    g.printBoard();
+                    System.out.println("Congrats " + p2 + ". You win!");
+                    p2Wins++;
+                }
+                else
+                {
+                    g.printBoard();
+                    System.out.println("It's a tie between " + p1 + " and " + p2);
+                }
+                System.out.println("The score between" + p1 + " and " + p2 + " is:\n" + p1 + " - " + p1Wins + "\n" + p2 + " - " + p2Wins);
+                System.out.println();
+                System.out.println("If you want to proceed to the next round, press 0. Else if you wanna start a new game, press 1. If you want to end the game, press 2");
+                System.out.println("DO NOT Enter any other number other than 0 or 1 or 2. If you do so, the game will end");
+                flag = scanner.nextInt();
+
+                if(flag == 0)
+                {
+                    continue;
+                }
+                else if(flag == 2)
+                {
+                    System.out.println("The Final score:");
+                    System.out.println(p1 + " - " + p1Wins + "\n" + p2 + " - " + p2Wins);
+                    System.out.println();
+                    System.out.println("Thank you for playing this game! :)");
+                    System.exit(0);
+                }
+                //else if(flag == 1)
+                else
+                {
+                    System.out.println("Invalid input. Please enter 0 or 1 or 2.");
+                    System.exit(0);
+                }
+
             }
-
-            clrscr();
-            result = g.checkWinner(p1Positions, p2Positions);
         }
 
-        if(result == 10)
-        {
-            System.out.println("Congrats " + p1 + ". You win!");
-        }
-        else if(result == 20)
-        {
-            System.out.println("Congrats " + p2 + ". You win!");
-        }
-        else
-        {
-            System.out.println("It's a tie between " + p1 + " and " + p2);
-        }
     }
     public static void clrscr()
     {

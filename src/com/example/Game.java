@@ -113,24 +113,28 @@ public class Game
         winning.add(diagonal1);
         winning.add(diagonal2);
 
+        int ref = 0;
         for (List l : winning)
         {
             if (p1.containsAll(l))
             {
-                return 10;
-            } else if (p2.contains(l))
+                ref = 10;
+                break;
+            } else if (p2.containsAll(l))
             {
-                return 20;
+                ref = 20;
+                break;
             } else if (p1.size() + p2.size() == 9)
             {
-                return 30;
+                ref = 30;
+                break;
             } else
             {
-                return 0;
+                ref = 0;
             }
         }
 
-        return 0;
+        return ref;
     }
 }
 
