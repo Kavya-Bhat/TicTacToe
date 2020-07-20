@@ -4,18 +4,38 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Game<toprow, winning>
+public class Game
 {
     char[][] gameBoard = new char[5][5];
-    String player1, player 2;
+    String player1, player2;
+
+    public String getPlayer1()
+    {
+        return player1;
+    }
+
+    public void setPlayer1(String player1)
+    {
+        this.player1 = player1;
+    }
+
+    public String getPlayer2()
+    {
+        return player2;
+    }
+
+    public void setPlayer2(String player2)
+    {
+        this.player2 = player2;
+    }
 
     void setGameBoard()
     {
-        gameBoard = {{" ", '|', " ", '|', " "}
-                {" ", '|', " ", '|', " "}
-                {" ", '|', " ", '|', " "}
-                {" ", '|', " ", '|', " "}
-                {" ", '|', " ", '|', " "}};
+        gameBoard = new char[][]{{' ', '|',' ', '|',' '},
+                {'-', '+', '-', '+','-'},
+                {' ', '|', ' ', '|', ' '},
+                {'-', '+', '-', '+', '-'},
+                {' ', '|', ' ', '|', ' '}};
     }
 
     public char[][] getGameBoard()
@@ -23,7 +43,7 @@ public class Game<toprow, winning>
         return gameBoard;
     }
 
-    void printgameBoard()
+    void printBoard()
     {
         for (int i = 0; i < gameBoard.length; i++)
         {
@@ -35,37 +55,39 @@ public class Game<toprow, winning>
         }
     }
 
-    void placePiece(char[][] board, int position, char symbol)
+    void placePiece(int position, char symbol)
     {
         switch (position)
         {
-            case1:
-            board[0][0] = symbol;
+            case 1:
+            gameBoard[0][0] = symbol;
             break;
-            case2:
-            board[0][2] = symbol;
+            case 2:
+            gameBoard[0][2] = symbol;
             break;
-            case3:
-            board[0][4] = symbol;
+            case 3:
+            gameBoard[0][4] = symbol;
             break;
-            case4:
-            board[2][0] = symbol;
+            case 4:
+            gameBoard[2][0] = symbol;
             break;
-            case5:
-            board[2][2] = symbol;
+            case 5:
+            gameBoard[2][2] = symbol;
             break;
-            case6:
-            board[2][4] = symbol;
+            case 6:
+            gameBoard[2][4] = symbol;
             break;
-            case7:
-            board[4][0] = symbol;
+            case 7:
+            gameBoard[4][0] = symbol;
             break;
-            case8:
-            board[4][2] = symbol;
+            case 8:
+            gameBoard[4][2] = symbol;
             break;
-            case9:
-            board[4][4] = symbol;
+            case 9:
+            gameBoard[4][4] = symbol;
             break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + position);
         }
     }
 
@@ -79,15 +101,18 @@ public class Game<toprow, winning>
         List bottomcolumn = Arrays.asList(3, 6, 9);
         List diagonal1 = Arrays.asList(1, 5, 9);
         List diagonal2 = Arrays.asList(7, 5, 3);
+
         ArrayList<List> winning = new ArrayList<>();
-        winning.add(toprow)
+
+        winning.add(toprow);
         winning.add(middlerow);
         winning.add(bottomrow);
-        winning.add(topcolumn)
+        winning.add(topcolumn);
         winning.add(middlecolumn);
-        winning.add(bottomcolumn)
+        winning.add(bottomcolumn);
         winning.add(diagonal1);
         winning.add(diagonal2);
+
         for (List l : winning)
         {
             if (p1.containsAll(l))
@@ -104,6 +129,8 @@ public class Game<toprow, winning>
                 return 0;
             }
         }
+
+        return 0;
     }
 }
 
